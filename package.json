@@ -1,17 +1,27 @@
 {
-  "name": "AllotrMetricsCronjob",
+  "name": "allotr-metrics-cronjob",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
     "build": "tsc",
-    "start": "node ./dist/index.js"
+    "start": "node ./dist/index.js",
+    "debug-server": "ts-node-dev --respawn ./src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "typescript": "^4.3.5"
+    "allotr-graphql-schema-types": "^0.0.13",
+    "dotenv": "^10.0.0",
+    "moment": "^2.29.1",
+    "mongodb": "^4.1.1",
+    "typescript": "^4.3.5",
+    "web-push": "^3.4.5"
+  },
+  "devDependencies": {
+    "@types/web-push": "^3.3.2",
+    "ts-node-dev": "^1.1.8"
   }
 }
