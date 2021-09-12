@@ -16,5 +16,5 @@ spec:
           containers:
           - name: allotr-metrics-cronjob
             image: rafaelpernil/allotr-metrics-cronjob:production
-            imagePullPolicy: IfNotPresent
+            imagePullPolicy: Always
           restartPolicy: OnFailure
