@@ -5,7 +5,7 @@ metadata:
   namespace: openfaas-fn
 spec:
   # Executes each minute
-  schedule: "0 */1 * * *"
+  schedule: "0 * * * *"
   jobTemplate:
     spec:
       template:
