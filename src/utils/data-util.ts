@@ -93,7 +93,10 @@ function getNotificationsFromFrequencyMap(dateFrequencyMap: Record<string, numbe
             ([key, value]) =>
                 value >= threshold &&
                 moment.utc()
-                    .isAfter(moment.utc(key, TIME_FORMAT).add(timeToWait, "m")))
+                    .isBetween( // Only notify after X time from the notification with a timeout of 30 minutes
+                        moment.utc(key, TIME_FORMAT).add(timeToWait, "m"),
+                        moment.utc(key, TIME_FORMAT).add(timeToWait + 30, "m"))
+        )
         .map(([key]) => key);
 }
 
@@ -112,7 +115,7 @@ function calculateDateFrequencies(dateList: Date[], timeRange: number = 30): Rec
                         moment.utc(dateTime, TIME_FORMAT).add(timeRange, "m")
                     )
         });
-        if (hasSimilarDate){
+        if (hasSimilarDate) {
             continue;
         }
         filteredDateList.push(dateToCheck);
