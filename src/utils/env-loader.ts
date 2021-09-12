@@ -14,7 +14,8 @@ export class EnvLoader {
             DB_NAME: undefined,
             TIME_RANGE: undefined,
             NOTIFICATION_FREQUENCY_THRESHOLD: undefined,
-            TIME_TO_WAIT: undefined
+            TIME_TO_WAIT: undefined,
+            TIMEOUT: undefined
         }
         const loadedVariables = Object.fromEntries(Object.entries(variablesToLoad).map(([key]) => ([key, process.env[key]])));
         if (!this.areVariablesValid(loadedVariables)) {

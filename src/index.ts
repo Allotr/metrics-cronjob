@@ -10,7 +10,8 @@ import { EnvLoader } from "./utils/env-loader";
 const {
     TIME_RANGE,
     NOTIFICATION_FREQUENCY_THRESHOLD,
-    TIME_TO_WAIT
+    TIME_TO_WAIT,
+    TIMEOUT
 } = EnvLoader.getInstance().loadedVariables;
 
 async function analyzeUserData() {
@@ -23,9 +24,9 @@ async function analyzeUserData() {
             // Here we process the user activity related to a resource
             const activeStatusList = getStatusListByStatusCode(ticket.statuses, TicketStatusCode.Active);
             const dateList = activeStatusList.map(({ timestamp }) => timestamp);
-            const dateFrequencyMap = calculateDateFrequencies(dateList, Number(TIME_RANGE))
+            const dateFrequencyMap = calculateDateFrequencies(dateList, Number(TIME_RANGE));
 
-            const notifications = getNotificationsFromFrequencyMap(dateFrequencyMap, Number(NOTIFICATION_FREQUENCY_THRESHOLD), Number(TIME_TO_WAIT))
+            const notifications = getNotificationsFromFrequencyMap(dateFrequencyMap, Number(NOTIFICATION_FREQUENCY_THRESHOLD), Number(TIME_TO_WAIT), Number(TIMEOUT))
             if (Object.keys(dateFrequencyMap).length === 0)
                 continue;
             if (notifications.length === 0)

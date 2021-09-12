@@ -6,5 +6,6 @@ export interface EnvObject extends Record<string, string> {
     DB_NAME: string,
     TIME_RANGE: string,
     NOTIFICATION_FREQUENCY_THRESHOLD: string,
-    TIME_TO_WAIT: string
+    TIME_TO_WAIT: string,
+    TIMEOUT: string
 }

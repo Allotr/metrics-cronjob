@@ -85,22 +85,28 @@ function getStatusListByStatusCode(statuses: TicketStatusDbObject[] = [], status
 }
 
 
-function getNotificationsFromFrequencyMap(dateFrequencyMap: Record<string, number>, threshold: number = 3, timeToWait: number = 30) {
+function getNotificationsFromFrequencyMap(
+    dateFrequencyMap: Record<string, { wasActivatedToday: boolean, frequency: number }>,
+    threshold: number = 3,
+    timeToWait: number = 30,
+    timeout: number = 30
+) {
     // Return the dates that are repeated more than 3 times and need to be notified
     return Object
         .entries(dateFrequencyMap)
         .filter(
             ([key, value]) =>
-                value >= threshold &&
+                !value.wasActivatedToday &&
+                value.frequency >= threshold &&
                 moment.utc()
                     .isBetween( // Only notify after X time from the notification with a timeout of 30 minutes
                         moment.utc(key, TIME_FORMAT).add(timeToWait, "m"),
-                        moment.utc(key, TIME_FORMAT).add(timeToWait + 30, "m"))
+                        moment.utc(key, TIME_FORMAT).add(timeToWait + timeout, "m"))
         )
         .map(([key]) => key);
 }
 
-function calculateDateFrequencies(dateList: Date[], timeRange: number = 30): Record<string, number> {
+function calculateDateFrequencies(dateList: Date[], timeRange: number = 30): Record<string, { wasActivatedToday: boolean, frequency: number }> {
     // We need to pre-group the dates to remove unneeded data
     const filteredDateList: Date[] = []
     for (const dateToCheck of dateList) {
@@ -123,7 +129,7 @@ function calculateDateFrequencies(dateList: Date[], timeRange: number = 30): Rec
 
 
 
-    const dateFrequencyMap: Record<string, number> = {}
+    const dateFrequencyMap: Record<string, { wasActivatedToday: boolean, frequency: number }> = {}
     const alreadyProcessedMap: Record<string, boolean> = {};
     for (let i = 0; i < filteredDateList.length; i++) {
         const referenceDate = filteredDateList[i];
@@ -137,6 +143,7 @@ function calculateDateFrequencies(dateList: Date[], timeRange: number = 30): Rec
             if (dateRangeFound == null)
                 continue;
             const [dateInRange] = dateRangeFound;
+            const wasActivatedToday = dateInRange.isSame(moment.utc(), "day")
             // Get time
             const newKey = dateInRange.toISOString().substring(11, 19)
             // Avoid entering duplicates
@@ -151,7 +158,9 @@ function calculateDateFrequencies(dateList: Date[], timeRange: number = 30): Rec
                 return hasPreviousKey ? key : newKey;
             }, newKey);
             alreadyProcessedMap[dateToCheck.toISOString()] = true;
-            dateFrequencyMap[nonDuplicateKey] = dateFrequencyMap[nonDuplicateKey] == null ? 1 : dateFrequencyMap[nonDuplicateKey] + 1;
+            dateFrequencyMap[nonDuplicateKey] = dateFrequencyMap[nonDuplicateKey] == null ?
+                { frequency: 1, wasActivatedToday } :
+                { frequency: dateFrequencyMap[nonDuplicateKey].frequency + 1, wasActivatedToday };
         }
     }
     return dateFrequencyMap;
