@@ -111,15 +111,15 @@ async function pushNotification(
                     p256dh: subscription.keys?.p256dh ?? ""
                 }
             })
+            console.log("Notification sent!", subscription, user);
         } catch (e) {
+            console.log("ERROR PUSHING", e)
         }
     }
 
     // We delete the notification after one minute to avoid overloading the table
-    setTimeout(() => {
-        db.collection<ResourceNotificationDbObject>(NOTIFICATIONS).deleteOne({ _id: notificationId });
-    }, 10 * 1000)
-
+    await new Promise(resolve => setTimeout(resolve, 10 * 1000));
+    db.collection<ResourceNotificationDbObject>(NOTIFICATIONS).deleteOne({ _id: notificationId });
 
 }
 
