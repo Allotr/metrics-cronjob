@@ -22,8 +22,8 @@ async function analyzeUserData() {
     for (const resource of resources) {
         for (const ticket of resource.tickets) {
             // Here we process the user activity related to a resource
-            const activeStatusList = getStatusListByStatusCode(ticket.statuses, TicketStatusCode.Active);
-            const dateList = activeStatusList.map(({ timestamp }) => timestamp);
+            const requestingStatusList = getStatusListByStatusCode(ticket.statuses, TicketStatusCode.Requesting);
+            const dateList = requestingStatusList.map(({ timestamp }) => timestamp);
             const dateFrequencyMap = calculateDateFrequencies(dateList, Number(TIME_RANGE));
 
             const notifications = getNotificationsFromFrequencyMap(dateFrequencyMap, Number(NOTIFICATION_FREQUENCY_THRESHOLD), Number(TIME_TO_WAIT), Number(TIMEOUT))
