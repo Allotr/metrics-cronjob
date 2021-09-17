@@ -114,6 +114,16 @@ async function pushNotification(
             console.log("Notification sent!", subscription, user);
         } catch (e) {
             console.log("ERROR PUSHING", e)
+            // Let's delete the bad subscription
+            await db.collection(USERS).updateOne({
+                _id: user._id
+            }, {
+                $pull: {
+                    "webPushSubscriptions": subscription
+                }
+            }, {
+                arrayFilters: [],
+            })
         }
     }
 
