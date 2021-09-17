@@ -1,6 +1,5 @@
 import { CustomTryCatch } from "../types/custom-try-catch";
 import { TicketDbObject, TicketStatusCode, TicketStatusDbObject } from "allotr-graphql-schema-types";
-import { ObjectId } from "mongodb";
 import { CategorizedArrayData } from "../types/categorized-array-data";
 import moment, { Moment } from "moment";
 

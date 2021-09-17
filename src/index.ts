@@ -5,14 +5,15 @@ require('dotenv').config();
 import { getResources, pushNotification } from "./utils/transaction-util";
 import { TicketStatusCode } from "allotr-graphql-schema-types";
 import { calculateDateFrequencies, getNotificationsFromFrequencyMap, getStatusListByStatusCode } from "./utils/data-util";
-import { EnvLoader } from "./utils/env-loader";
+import { getLoadedEnvVariables } from "./utils/env-loader";
+import moment from "moment";
 
 const {
     TIME_RANGE,
     NOTIFICATION_FREQUENCY_THRESHOLD,
     TIME_TO_WAIT,
     TIMEOUT
-} = EnvLoader.getInstance().loadedVariables;
+} = getLoadedEnvVariables();
 
 async function analyzeUserData() {
     const resources = await getResources();

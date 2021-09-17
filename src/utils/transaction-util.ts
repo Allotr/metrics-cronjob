@@ -1,12 +1,12 @@
 import { ResourceDbObject, UserDbObject, TicketStatusCode, ResourceNotificationDbObject, TicketUserInfoDbObject } from "allotr-graphql-schema-types";
-import { MongoDBSingleton } from "./mongodb-singleton";
+import { getMongoDBConnection } from "./mongodb-connector";
 import { ObjectId, Db } from "mongodb";
 import { NOTIFICATIONS, RESOURCES, USERS } from "../consts/collections";
 import * as webPush from "web-push"
 import { USAGE_ANALYTICS, USAGE_ANALYTICS_DESCRIPTION } from "../consts/notification_tokens";
-import { EnvLoader } from "./env-loader";
+import { getLoadedEnvVariables } from "./env-loader";
 async function getUserTicket(userId: string | ObjectId, resourceId: string, myDb?: Db): Promise<ResourceDbObject | null> {
-    const db = myDb ?? await MongoDBSingleton.getInstance().db;
+    const db = myDb ?? await getMongoDBConnection().db;
     const [parsedUserId, parsedResourceId] = [new ObjectId(userId), new ObjectId(resourceId)];
 
     const [userTikcet] = await db.collection<ResourceDbObject>(RESOURCES).find({
@@ -35,7 +35,7 @@ async function getUserTicket(userId: string | ObjectId, resourceId: string, myDb
 }
 
 async function getResource(resourceId: string): Promise<ResourceDbObject | null | undefined> {
-    const db = await MongoDBSingleton.getInstance().db;
+    const db = await getMongoDBConnection().db;
 
     const userTikcet = await db.collection<ResourceDbObject>(RESOURCES).findOne({
         _id: new ObjectId(resourceId),
@@ -48,12 +48,12 @@ async function getResource(resourceId: string): Promise<ResourceDbObject | null 
 }
 
 async function getResources(): Promise<ResourceDbObject[]> {
-    const db = await MongoDBSingleton.getInstance().db;
+    const db = await getMongoDBConnection().db;
     return await db.collection<ResourceDbObject>(RESOURCES).find().toArray();
 }
 
 async function getUser(userId?: ObjectId | null): Promise<UserDbObject | null | undefined> {
-    const db = await MongoDBSingleton.getInstance().db;
+    const db = await getMongoDBConnection().db;
     const userTikcet = await db.collection<UserDbObject>(USERS).findOne({
         _id: userId,
     })
@@ -67,9 +67,9 @@ async function pushNotification(
     user: TicketUserInfoDbObject,
     timestamp: Date,
 ) {
-    const db = await MongoDBSingleton.getInstance().db;
+    const db = await getMongoDBConnection().db;
 
-    const { VAPID_PRIVATE_KEY, VAPID_PUBLIC_KEY, REDIRECT_URL } = EnvLoader.getInstance().loadedVariables;
+    const { VAPID_PRIVATE_KEY, VAPID_PUBLIC_KEY, REDIRECT_URL } = getLoadedEnvVariables();
 
     webPush.setVapidDetails(
         REDIRECT_URL,
