@@ -142,7 +142,7 @@ function calculateDateFrequencies(dateList: Date[], timeRange: number = 30): Rec
             if (dateRangeFound == null)
                 continue;
             const [dateInRange] = dateRangeFound;
-            const wasRequestedToday = dateInRange.isSame(moment.utc(), "day")
+            const wasRequestedToday = moment.utc(dateToCheck).isSame(moment.utc(), "day")
             // Get time
             const newKey = dateInRange.toISOString().substring(11, 19)
             // Avoid entering duplicates
