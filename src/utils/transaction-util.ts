@@ -127,8 +127,8 @@ async function pushNotification(
         }
     }
 
-    // We delete the notification after one minute to avoid overloading the table
-    await new Promise(resolve => setTimeout(resolve, 10 * 1000));
+    // We delete the notification after five minutes to avoid overloading the table
+    await new Promise(resolve => setTimeout(resolve, 5 * 60 * 1000));
     db.collection<ResourceNotificationDbObject>(NOTIFICATIONS).deleteOne({ _id: notificationId });
 
 }
