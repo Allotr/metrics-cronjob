@@ -32,7 +32,7 @@ async function analyzeUserData() {
                 continue;
             if (notifications.length === 0)
                 continue;
-            await pushNotification(resource, ticket.user, new Date());
+            pushNotification(resource, ticket.user, new Date());
         }
     }
 }
