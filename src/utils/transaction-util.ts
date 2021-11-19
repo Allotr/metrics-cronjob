@@ -5,47 +5,6 @@ import { NOTIFICATIONS, RESOURCES, USERS } from "../consts/collections";
 import * as webPush from "web-push"
 import { USAGE_ANALYTICS, USAGE_ANALYTICS_DESCRIPTION } from "../consts/notification_tokens";
 import { getLoadedEnvVariables } from "./env-loader";
-async function getUserTicket(userId: string | ObjectId, resourceId: string, myDb?: Db): Promise<ResourceDbObject | null> {
-    const db = myDb ?? await getMongoDBConnection().db;
-    const [parsedUserId, parsedResourceId] = [new ObjectId(userId), new ObjectId(resourceId)];
-
-    const [userTikcet] = await db.collection<ResourceDbObject>(RESOURCES).find({
-        _id: parsedResourceId,
-        "tickets.user._id": parsedUserId,
-        "tickets.statuses.statusCode": {
-            $ne: TicketStatusCode.Revoked
-        }
-    }, {
-        projection: {
-            "tickets.$": 1,
-            name: 1,
-            createdBy: 1,
-            description: 1,
-            maxActiveTickets: 1,
-            lastModificationDate: 1,
-            _id: 1,
-            creationDate: 1,
-            activeUserCount: 1
-        }
-    }).sort({
-        lastModificationDate: -1
-    }).toArray();
-
-    return userTikcet;
-}
-
-async function getResource(resourceId: string): Promise<ResourceDbObject | null | undefined> {
-    const db = await getMongoDBConnection().db;
-
-    const userTikcet = await db.collection<ResourceDbObject>(RESOURCES).findOne({
-        _id: new ObjectId(resourceId),
-        "tickets.statuses.statusCode": {
-            $ne: TicketStatusCode.Revoked
-        }
-    });
-
-    return userTikcet;
-}
 
 async function getResources(): Promise<ResourceDbObject[]> {
     const db = await getMongoDBConnection().db;
@@ -133,4 +92,4 @@ async function pushNotification(
 
 }
 
-export { getUserTicket, getResource, pushNotification, getResources }
+export { pushNotification, getResources }
