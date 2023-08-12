@@ -6,7 +6,6 @@ import { getResources, pushNotification } from "./utils/transaction-util";
 import { TicketStatusCode } from "allotr-graphql-schema-types";
 import { calculateDateFrequencies, getNotificationsFromFrequencyMap, getStatusListByStatusCode } from "./utils/data-util";
 import { getLoadedEnvVariables } from "./utils/env-loader";
-import moment from "moment";
 
 const {
     TIME_RANGE,
