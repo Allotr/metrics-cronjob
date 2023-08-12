@@ -4,7 +4,7 @@ metadata:
   name: allotr-metrics-cronjob
   namespace: openfaas-fn
 spec:
-  # Executes each minute
+  # Executes each 20 minutes
   schedule: "*/20 * * * *"
   jobTemplate:
     spec:
