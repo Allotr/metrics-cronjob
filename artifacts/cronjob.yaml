@@ -17,50 +17,50 @@ spec:
           - name: allotr-metrics-cronjob
             image: rafaelpernil/allotr-metrics-cronjob
             imagePullPolicy: Always
-          env:
-            - name:  MONGO_DB_ENDPOINT
-              valueFrom:
-                secretKeyRef:
-                  name:  allotr-metrics-cronjob-secret
-                  key:  MONGO_DB_ENDPOINT
-            - name:  REDIRECT_URL
-              valueFrom:
-                secretKeyRef:
-                  name:  allotr-metrics-cronjob-secret
-                  key:  REDIRECT_URL
-            - name:  VAPID_PUBLIC_KEY
-              valueFrom:
-                secretKeyRef:
-                  name:  allotr-metrics-cronjob-secret
-                  key:  VAPID_PUBLIC_KEY
-            - name:  VAPID_PRIVATE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name:  allotr-metrics-cronjob-secret
-                  key:  VAPID_PRIVATE_KEY
-            - name:  DB_NAME
-              valueFrom:
-                secretKeyRef:
-                  name:  allotr-metrics-cronjob-secret
-                  key:  DB_NAME
-            - name:  TIME_RANGE
-              valueFrom:
-                secretKeyRef:
-                  name:  allotr-metrics-cronjob-secret
-                  key:  TIME_RANGE
-            - name:  NOTIFICATION_FREQUENCY_THRESHOLD
-              valueFrom:
-                secretKeyRef:
-                  name:  allotr-metrics-cronjob-secret
-                  key:  NOTIFICATION_FREQUENCY_THRESHOLD
-            - name:  TIME_TO_WAIT
-              valueFrom:
-                secretKeyRef:
-                  name:  allotr-metrics-cronjob-secret
-                  key:  TIME_TO_WAIT
-            - name:  TIMEOUT
-              valueFrom:
-                secretKeyRef:
-                  name:  allotr-metrics-cronjob-secret
-                  key:  TIMEOUT
+            env:
+              - name:  MONGO_DB_ENDPOINT
+                valueFrom:
+                  secretKeyRef:
+                    name:  allotr-metrics-cronjob-secret
+                    key:  MONGO_DB_ENDPOINT
+              - name:  REDIRECT_URL
+                valueFrom:
+                  secretKeyRef:
+                    name:  allotr-metrics-cronjob-secret
+                    key:  REDIRECT_URL
+              - name:  VAPID_PUBLIC_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name:  allotr-metrics-cronjob-secret
+                    key:  VAPID_PUBLIC_KEY
+              - name:  VAPID_PRIVATE_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name:  allotr-metrics-cronjob-secret
+                    key:  VAPID_PRIVATE_KEY
+              - name:  DB_NAME
+                valueFrom:
+                  secretKeyRef:
+                    name:  allotr-metrics-cronjob-secret
+                    key:  DB_NAME
+              - name:  TIME_RANGE
+                valueFrom:
+                  secretKeyRef:
+                    name:  allotr-metrics-cronjob-secret
+                    key:  TIME_RANGE
+              - name:  NOTIFICATION_FREQUENCY_THRESHOLD
+                valueFrom:
+                  secretKeyRef:
+                    name:  allotr-metrics-cronjob-secret
+                    key:  NOTIFICATION_FREQUENCY_THRESHOLD
+              - name:  TIME_TO_WAIT
+                valueFrom:
+                  secretKeyRef:
+                    name:  allotr-metrics-cronjob-secret
+                    key:  TIME_TO_WAIT
+              - name:  TIMEOUT
+                valueFrom:
+                  secretKeyRef:
+                    name:  allotr-metrics-cronjob-secret
+                    key:  TIMEOUT
           restartPolicy: OnFailure
