@@ -1,4 +1,4 @@
-FROM node:18.17.1-slim
+FROM node:17.1.0-alpine3.12
 
 # Create project directory (workdir)
 RUN mkdir /app
