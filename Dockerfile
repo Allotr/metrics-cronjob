@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.12
+FROM node:18-alpine
 
 # Create project directory (workdir)
 RUN mkdir /app
