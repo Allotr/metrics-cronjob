@@ -42,5 +42,5 @@ async function analyzeUserData() {
 
 // Let's analyze user data and generate the notifications
 analyzeUserData()
-console.log("Job done, exiting...")
-process.exit();
+console.log("Job done, exiting... Exit code: ", process.exitCode)
+process.exit(1);
