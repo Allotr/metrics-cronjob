@@ -40,7 +40,10 @@ async function analyzeUserData() {
     console.log("analyzeUserData done");
 }
 
-// Let's analyze user data and generate the notifications
-analyzeUserData()
-console.log("Job done, exiting... Exit code: ", process.exitCode)
-process.exit(1);
+// Main async
+(async () => {
+    // Let's analyze user data and generate the notifications
+    await analyzeUserData()
+    console.log("Job done, exiting...")
+    process.exit(0);
+})()
