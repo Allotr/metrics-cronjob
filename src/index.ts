@@ -16,14 +16,11 @@ const {
 
 async function analyzeUserData() {
     const resources = await getResources();
-    console.log("RESOURCES loaded", resources);
     if (resources == null)
         return;
 
     for (const resource of resources) {
-        console.log("foreach resource", resource)
         for (const ticket of resource.tickets) {
-            console.log("foreach ticket", ticket)
             // Here we process the user activity related to a resource
             const requestingStatusList = getStatusListByStatusCode(ticket.statuses, TicketStatusCode.Requesting);
             const dateList = requestingStatusList.map(({ timestamp }) => timestamp);
@@ -37,7 +34,6 @@ async function analyzeUserData() {
             pushNotification(resource, ticket.user, new Date());
         }
     }
-    console.log("analyzeUserData done");
 }
 
 // Main async
