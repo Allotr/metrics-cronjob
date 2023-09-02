@@ -16,7 +16,7 @@ spec:
           containers:
           - name: allotr-metrics-cronjob
             image: rafaelpernil/allotr-metrics-cronjob
-            imagePullPolicy: IfNotPresent
+            imagePullPolicy: Always
             env:
               - name:  MONGO_DB_ENDPOINT
                 valueFrom:

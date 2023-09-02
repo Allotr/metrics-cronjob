@@ -36,5 +36,10 @@ async function analyzeUserData() {
     }
 }
 
-// Let's analyze user data and generate the notifications
-analyzeUserData()
+// Main async
+(async () => {
+    // Let's analyze user data and generate the notifications
+    await analyzeUserData()
+    console.log("Job done, exiting...")
+    process.exit(0);
+})()
