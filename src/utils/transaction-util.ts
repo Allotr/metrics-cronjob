@@ -58,7 +58,7 @@ async function pushNotification(
         return;
     }
 
-    for (const subscription of fullReceivingUser?.webPushSubscriptions) {
+    for (const subscription of (fullReceivingUser?.webPushSubscriptions ?? [])) {
         if (subscription == null) {
             return;
         }
